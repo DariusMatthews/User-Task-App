@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd client && npm run start",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "author": "lauste_js",
   "license": "ISC",
