@@ -11,5 +11,3 @@ AS A user
 I WANT to create task
 SO THAT I can organize my projects
 ```
-
-### App Criteria
