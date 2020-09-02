@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const newTask = new Task({
     task: req.body.task,
-    createdAt: new Date.toString()
+    createdAt: new Date
   });
 
   newTask.save()
@@ -24,17 +24,40 @@ router.post('/', (req, res) => {
 });
 
 // @api   PATCH
-// @desc  update task/mark task as completed
+// @desc  update task
 router.patch('/:id', (req, res) => {
   Task.findByIdAndUpdate(req.params.id, {
-    completedAt: new Date.toString()
-  }, err => { if (err) throw err });
+    task: req.body.task
+  }, (err, docs) => {
+    if (err) throw err;
+    res.json({
+      "updated": docs
+    })
+  });
+});
+
+// @api   PATCH
+// @desc  mark task as completed
+router.patch('/:id/completed', (req, res) => {
+  Task.findByIdAndUpdate(req.params.id, {
+    completedAt: new Date
+  }, (err, docs) => {
+    if (err) throw err;
+    res.json({
+      "completed task": docs
+    })
+  });
 });
 
 // @api   DELETE
 // @desc  delete a task
 router.delete('/:id', (req, res) => {
-  Task.findByIdAndDelete(req.params.id, err => { if (err) throw err });
+  Task.findByIdAndDelete(req.params.id, (err, docs) => {
+    if (err) throw err;
+    res.json({
+      "deleted": docs
+    })
+  });
 });
 
 
