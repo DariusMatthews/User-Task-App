@@ -4,18 +4,21 @@ const Task = require('../../models/Task');
 
 // @api   GET
 // @desc  get all task
-router.get('/', (req, res) => {
-  Task.find()
+router.get('/:name', (req, res) => {
+  Task.find({
+    createdBy: req.params.name
+  })
     .then(task => res.json(task))
     .catch(err => { if (err) throw err });
 });
 
 // @api   POST
 // @desc  create task
-router.post('/', (req, res) => {
+router.post('/:name', (req, res) => {
   const newTask = new Task({
     task: req.body.task,
-    createdAt: new Date
+    createdAt: new Date,
+    createdBy: req.params.name
   });
 
   newTask.save()
@@ -25,7 +28,7 @@ router.post('/', (req, res) => {
 
 // @api   PATCH
 // @desc  update task
-router.patch('/:id', (req, res) => {
+router.patch('/:name/:id', (req, res) => {
   Task.findByIdAndUpdate(req.params.id, {
     task: req.body.task
   }, (err, docs) => {
@@ -38,7 +41,7 @@ router.patch('/:id', (req, res) => {
 
 // @api   PATCH
 // @desc  mark task as completed
-router.patch('/:id/completed', (req, res) => {
+router.patch('/:name/:id/completed', (req, res) => {
   Task.findByIdAndUpdate(req.params.id, {
     completedAt: new Date
   }, (err, docs) => {
@@ -51,7 +54,7 @@ router.patch('/:id/completed', (req, res) => {
 
 // @api   DELETE
 // @desc  delete a task
-router.delete('/:id', (req, res) => {
+router.delete('/:name/:id', (req, res) => {
   Task.findByIdAndDelete(req.params.id, (err, docs) => {
     if (err) throw err;
     res.json({
@@ -59,7 +62,5 @@ router.delete('/:id', (req, res) => {
     })
   });
 });
-
-
 
 module.exports = router;

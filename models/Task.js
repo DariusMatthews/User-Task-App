@@ -7,6 +7,10 @@ const taskModel = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdBy: {
+    type: String,
+    required: true
+  },
   createdAt: {
     type: Date
   },
